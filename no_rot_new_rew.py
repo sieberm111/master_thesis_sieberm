@@ -43,6 +43,8 @@ from tqdm import tqdm  # For nice progress bar!
 # y_ball min:max -0.68:0 leva:prava
 # x_ball min:max -0.05:0.45 obrana:utok
 
+ball_path = "/root/catkin_ws/src/futfullv5_description/urdf/ball.xacro"
+save_path = "/storage/plzen1/home/sieberm/saved_models/"
 
 # SHOT dictionary
 shot_dict = {'sikmo_R2L_c': {'pos_rot': [-1.5, -1.5, -1.5, -1.3, -1, 1, 1.5, 1.5],
@@ -204,7 +206,7 @@ class FutEnv(Env):
                 try:
                     spawn_model(
                         model_name='ball',
-                        model_xml=open('/home/toofy/catkin_ws/src/futfullv5_description/urdf/ball.xacro', 'r').read(),
+                        model_xml=open(ball_path, 'r').read(),
                         robot_namespace='',
                         initial_pose=Pose(position=self.ball_pos, orientation=Quaternion(0, 0, 0, 0)),
                         reference_frame='world')
@@ -379,7 +381,7 @@ class FutEnv(Env):
         try:
             spawn_model(
                 model_name='ball',
-                model_xml=open('/home/toofy/catkin_ws/src/futfullv5_description/urdf/ball.xacro', 'r').read(),
+                model_xml=open(ball_path, 'r').read(),
                 robot_namespace='',
                 initial_pose=Pose(position=self.ball_pos, orientation=Quaternion(0, 0, 0, 0)),
                 reference_frame='world')
@@ -426,7 +428,7 @@ def setup_gazebo_physics():
 if __name__ == '__main__':
     #wanb init
 
-    wandb.init(project="master_thesis", entity="sieberm", name="PPO_multi_new_rew")
+    wandb.init(project="master_thesis", entity="sieberm", name=wandb_name)
     wandb.config = {
         "learning_rate": 0.003,
         "time_steps": 500000,
@@ -446,16 +448,16 @@ if __name__ == '__main__':
     env.unpause_physics_client()
 
     #init internal loging and saving
-    checkpoint_callback = CheckpointCallback(save_freq=25_000, save_path='./saved_models_new_rew/',
-                                             name_prefix='rl_model_no_rot5')
+    checkpoint_callback = CheckpointCallback(save_freq=50_000, save_path=save_path,
+                                             name_prefix='rl_model')
 
     #model init
-    #model = PPO("MlpPolicy", env, verbose=1)
-    model = PPO.load("./saved_models_new_rew/PPO_multishot_no_rot_new_rew.zip", env, verbose=1)
+    model = PPO("MlpPolicy", env, verbose=1)
+    #model = PPO.load("./saved_models_new_rew/PPO_multishot_no_rot_new_rew.zip", env, verbose=1)
 
     # Train the agent
     model.learn(total_timesteps=500_000, callback=checkpoint_callback)
     # Save the agent
-    model.save("saved_models_new_rew/PPO_multishot_no_rot_new_rew")
+    model.save(save_path + "PPO_multishot_no_rot_new_rew")
 
     env.pause_physics_client()

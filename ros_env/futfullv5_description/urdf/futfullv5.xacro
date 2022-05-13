@@ -1,0 +1,200 @@
+<?xml version="1.0" ?>
+<robot name="futfullv5" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find futfullv5_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find futfullv5_description)/urdf/futfullv5.trans" />
+<xacro:include filename="$(find futfullv5_description)/urdf/futfullv5.gazebo" />
+
+<link name="base_link">
+  <inertial>
+    <origin rpy="0 0 0" xyz="0.29247732204403404 -0.35807988890197734 0.05089353108091054"/>
+    <mass value="1160"/>
+    <inertia ixx="1000" ixy="0" ixz="0" iyy="1000" iyz="0" izz="1000"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="0 0 0"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_fill_golie_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-3.8274426683582163e-10 0.015063699106974108 4.768375000407943e-10"/>
+    <mass value="0.006751086263023987"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.093 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_golie_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.093 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_golie_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_golie_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.01799902092656594 -0.4632532318725868 -0.028375838044258958"/>
+    <mass value="0.33174728345156196"/>
+    <inertia ixx="0.012235" ixy="0.0" ixz="0.0" iyy="0.000237" iyz="-2.8e-05" izz="0.012006"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.111 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_golie_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.111 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_golie_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_fill_defense_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-3.827445860249412e-10 0.015063699106974152 4.768373196295528e-10"/>
+    <mass value="0.006751086263023966"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="-0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.243 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_defense_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.243 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_defense_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_defense_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.018033500912138373 -0.5627518749379135 -0.03027010243477561"/>
+    <mass value="0.5575527186274128"/>
+    <inertia ixx="0.024581" ixy="-0.0" ixz="-0.0" iyy="0.000459" iyz="-3.8e-05" izz="0.024136"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.261 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_defense_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.261 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_defense_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_fill_attack_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-3.8274466929166806e-10 0.01506369910697417 4.768374306518552e-10"/>
+    <mass value="0.006751086263023945"/>
+    <inertia ixx="0.0" ixy="0.0" ixz="-0.0" iyy="0.0" iyz="0.0" izz="0.0"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.393 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_attack_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.393 0.018 -0.103"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_fill_attack_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<link name="link_attack_1">
+  <inertial>
+    <origin rpy="0 0 0" xyz="-0.017998214210212304 -0.48997502692795714 -0.0318066917797455"/>
+    <mass value="0.7480974035334914"/>
+    <inertia ixx="0.028068" ixy="0.0" ixz="0.0" iyy="0.000671" iyz="-8.8e-05" izz="0.027416"/>
+  </inertial>
+  <visual>
+    <origin rpy="0 0 0" xyz="-0.411 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_attack_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin rpy="0 0 0" xyz="-0.411 -0.0015 -0.121"/>
+    <geometry>
+      <mesh filename="package://futfullv5_description/meshes/link_attack_1.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+<joint name="rev_golie" type="continuous">
+  <origin rpy="0 0 0" xyz="0.093 -0.018 0.103"/>
+  <parent link="base_link"/>
+  <child link="link_fill_golie_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+</joint>
+
+<joint name="slide_golie" type="prismatic">
+  <origin rpy="0 0 0" xyz="0.018 0.0195 0.018"/>
+  <parent link="link_fill_golie_1"/>
+  <child link="link_golie_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+  <limit effort="100" lower="0.0" upper="0.223" velocity="100"/>
+</joint>
+
+<joint name="rev_def" type="continuous">
+  <origin rpy="0 0 0" xyz="0.243 -0.018 0.103"/>
+  <parent link="base_link"/>
+  <child link="link_fill_defense_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+</joint>
+
+<joint name="slide_def" type="prismatic">
+  <origin rpy="0 0 0" xyz="0.018 0.0195 0.018"/>
+  <parent link="link_fill_defense_1"/>
+  <child link="link_defense_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+  <limit effort="100" lower="0.0" upper="0.415" velocity="100"/>
+</joint>
+
+<joint name="rev_att" type="continuous">
+  <origin rpy="0 0 0" xyz="0.393 -0.018 0.103"/>
+  <parent link="base_link"/>
+  <child link="link_fill_attack_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+</joint>
+
+<joint name="slide_att" type="prismatic">
+  <origin rpy="0 0 0" xyz="0.018 0.0195 0.018"/>
+  <parent link="link_fill_attack_1"/>
+  <child link="link_attack_1"/>
+  <axis xyz="-0.0 1.0 0.0"/>
+  <limit effort="100" lower="0.0" upper="0.275" velocity="100"/>
+</joint>
+
+</robot>

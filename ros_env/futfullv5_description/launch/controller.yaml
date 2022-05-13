@@ -1,0 +1,32 @@
+futfullv5:
+  # EDIT! z futfullv5_controller
+  # Publish all joint states -----------------------------------
+  joint_state_controller:
+    type: joint_state_controller/JointStateController
+    publish_rate: 50
+
+  # Position Controllers --------------------------------------
+  rev_golie_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: rev_golie
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  slide_golie_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: slide_golie
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rev_def_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: rev_def
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  slide_def_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: slide_def
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  rev_att_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: rev_att
+    pid: {p: 100.0, i: 0.01, d: 10.0}
+  slide_att_position_controller:
+    type: effort_controllers/JointPositionController
+    joint: slide_att
+    pid: {p: 100.0, i: 0.01, d: 10.0}

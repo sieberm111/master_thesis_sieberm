@@ -1,0 +1,15 @@
+<launch>
+  <arg default="$(find futfullv5_description)/urdf/futfullv5.xacro" name="model"/>
+  <arg default="true" name="gui"/>
+  <arg default="$(find futfullv5_description)/launch/urdf.rviz" name="rvizconfig"/>
+  <param command="$(find xacro)/xacro $(arg model)" name="robot_description"/>
+
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+    <node pkg="rviz" type="rviz" name="rviz" required="true" args="-d $(find futfullv5_description)/launch/urdf.rviz"/>
+    <node pkg="joint_state_publisher_gui" type="joint_state_publisher_gui" name="joint_state_publisher">
+    <param name="use_gui" value="$(arg gui)"/>
+    </node>
+
+</launch>

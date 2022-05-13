@@ -1,0 +1,33 @@
+<launch>
+  <param command="$(find xacro)/xacro $(find futfullv5_description)/urdf/futfullv5.xacro" name="robot_description"/>
+  <node args="-param robot_description -urdf -model futfullv5" name="spawn_arena" pkg="gazebo_ros" type="spawn_model"/>
+
+ <rosparam file="$(find futfullv5_description)/launch/controller.yaml" command="load"/>
+
+ <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
+       output="screen" ns="/futfullv5"
+	args="rev_golie_position_controller
+              slide_golie_position_controller 
+              rev_def_position_controller 
+              slide_def_position_controller 
+              rev_att_position_controller 
+              slide_att_position_controller 
+              joint_state_controller"/>
+
+ <node name="robot_state_publisher" output="screen" pkg="robot_state_publisher" respawn="false" type="robot_state_publisher">
+   <remap from="/joint_states" to="/futfullv5/joint_states"/>
+ </node>
+
+  <param command="$(find xacro)/xacro $(find futfullv5_description)/urdf/ball.xacro" name="ball_description"/>
+  <node args="-param ball_description -urdf -x 0.4 -y -0.35 -z 0.05 -model ball" name="spawn_ball" pkg="gazebo_ros" type="spawn_model"/>
+
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="true"/>
+    <arg name="use_sim_time" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
+    <arg name="debug" value="false"/>
+  </include>
+
+  <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher"/>
+</launch>

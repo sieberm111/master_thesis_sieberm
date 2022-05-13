@@ -1,0 +1,37 @@
+<?xml version="1.0" ?>
+<robot name="ball" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="ball">
+    <inertial>
+      <mass value="0.05" />
+      <!-- center of mass (com) is defined w.r.t. link local coordinate system -->
+      <!-- give a little y-offset to make the top precess -->
+      <origin xyz="0 0 0" /> 
+      <inertia  ixx="1.0" ixy="1.0"  ixz="1.0"  iyy="1.0"  iyz="1.0"  izz="1.0" />
+    </inertial>
+    <visual>
+      <!-- visual origin is defined w.r.t. link local coordinate system -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.015"/>
+      </geometry>
+    </visual>
+    <collision>
+      <!-- collision origin is defined w.r.t. link local coordinate system -->
+      <origin xyz="0 0 0" rpy="0 0 0" />
+      <geometry>
+        <sphere radius="0.015"/>
+      </geometry>
+     </collision>
+
+  </link>
+  <gazebo reference="ball">
+    <mu1>0.005</mu1>
+    <mu2>0.005</mu2>
+    <fdir1> 0 0 0 </fdir1>
+    <kp>1e+20</kp>
+    <kd> 1 </kd>
+    <material>Gazebo/Red</material>
+    <turnGravityOff>false</turnGravityOff>
+  </gazebo>
+</robot>
