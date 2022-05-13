@@ -45,6 +45,8 @@ from tqdm import tqdm  # For nice progress bar!
 
 ball_path = "/root/catkin_ws/src/futfullv5_description/urdf/ball.xacro"
 save_path = "/storage/plzen1/home/sieberm/saved_models/"
+load_path = ""
+wandb_name = "tst"
 
 # SHOT dictionary
 shot_dict = {'sikmo_R2L_c': {'pos_rot': [-1.5, -1.5, -1.5, -1.3, -1, 1, 1.5, 1.5],
@@ -453,7 +455,7 @@ if __name__ == '__main__':
 
     #model init
     model = PPO("MlpPolicy", env, verbose=1)
-    #model = PPO.load("./saved_models_new_rew/PPO_multishot_no_rot_new_rew.zip", env, verbose=1)
+    #model = PPO.load(load_path, env, verbose=1)
 
     # Train the agent
     model.learn(total_timesteps=500_000, callback=checkpoint_callback)
