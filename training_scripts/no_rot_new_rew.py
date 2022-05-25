@@ -32,21 +32,10 @@ from torch import nn  # All neural network modules
 from torch.utils.data import DataLoader  # Gives easier dataset managment by creating mini batches etc.
 from tqdm import tqdm  # For nice progress bar!
 
-# golie slide = 0 - 0.223
-# def slide = 0 - 0.415
-# att slide = 0 - 0.275
-# rotate all = -3.14 - 3.14
-
-# rotate + rotace utok
-# rotate - rotace defend
-
-# y_ball min:max -0.68:0 leva:prava
-# x_ball min:max -0.05:0.45 obrana:utok
-
 ball_path = "/root/catkin_ws/src/futfullv5_description/urdf/ball.xacro"
-save_path = "/storage/plzen1/home/sieberm/saved_models/"
+save_path = ""
 load_path = ""
-wandb_name = "tst"
+wandb_name = ""
 
 # SHOT dictionary
 shot_dict = {'sikmo_R2L_c': {'pos_rot': [-1.5, -1.5, -1.5, -1.3, -1, 1, 1.5, 1.5],
@@ -163,8 +152,8 @@ class FutEnv(Env):
 
     def transform_range(self, list_coord):
         list_out = np.zeros(4)
-        list_out[0] = (list_coord[2] * 7.27272727272727) - 1  # mapuje rozsah na -1:1 att slide
-        list_out[1] = list_coord[5] / 1.57  # mapuje rozsah na -1:1 att rotation
+        list_out[0] = (list_coord[2] * 7.27272727272727) - 1  # maps the position of att_slide to -1:1
+        list_out[1] = list_coord[5] / 1.57  # maps the position of att_rotation to -1:1
         list_out[2] = (list_coord[6] * 4) - 0.9  # maps x coordinate of ball to -1:1 (1 close to att, -1 close to goal)
         list_out[3] = (list_coord[7] * 2.92825768667643) + 1  # maps y of ball to -1:1 left:right
         return list_out
@@ -172,19 +161,19 @@ class FutEnv(Env):
     def transform_coordinates(self, list_coord):
         # [slide_golie, slide_def, slide_att, rev_golie, rev_def, rev_att, ball_x, ball_y]
         list_out = np.zeros(11)
-        list_out[0] = ((list_coord[0] - 0.4691) * 2.92825768667643) + 1  # mapuje golie slide na pos v hristi -1:1
-        list_out[1] = ((list_coord[1] - 0.6811) * 2.92825768667643) + 1  # mapuje def slide leva na pos v hristi -1:1
-        list_out[2] = ((list_coord[1] - 0.451) * 2.92825768667643) + 1  # mapuje def slide prava na pos v hristi -1:1
+        list_out[0] = ((list_coord[0] - 0.4691) * 2.92825768667643) + 1  # maps golie slide to pos in field -1:1
+        list_out[1] = ((list_coord[1] - 0.6811) * 2.92825768667643) + 1  # maps def slide left to pos in field -1:1
+        list_out[2] = ((list_coord[1] - 0.451) * 2.92825768667643) + 1  # maps def slide right to pos in field -1:1
         list_out[3] = ((list_coord[
-                            2] - 0.6811) * 2.92825768667643) + 1  # mapuje rozsah na 0:0.28 att slide leva na pos v hristi pak na -1:1 v y
+                            2] - 0.6811) * 2.92825768667643) + 1  # maps att slide left to pos to pos in field -1:1 y-axis
         list_out[4] = ((list_coord[
-                            2] - 0.4961) * 2.92825768667643) + 1  # mapuje rozsah na 0:0.28 att slide stred na pos v hristi pak na -1:1 v y
+                            2] - 0.4961) * 2.92825768667643) + 1  # maps att slide mid to pos to pos in field -1:1 y-axis
         list_out[5] = ((list_coord[
-                            2] - 0.3111) * 2.92825768667643) + 1  # mapuje rozsah na 0:0.28 att slide prava na pos v hristi pak na -1:1 v y
+                            2] - 0.3111) * 2.92825768667643) + 1  # maps att slide right to pos to pos in field -1:1 y-axis
 
-        list_out[6] = list_coord[3] / 0.785  # mapuje rozsah na -1:1 golie rotation
-        list_out[7] = list_coord[4] / 0.785  # mapuje rozsah na -1:1 def rotation
-        list_out[8] = list_coord[5] / 1.57  # mapuje rozsah na -1:1 att rotation
+        list_out[6] = list_coord[3] / 0.785  # maps golie rotation to -1:1
+        list_out[7] = list_coord[4] / 0.785  # maps def rotation to -1:1
+        list_out[8] = list_coord[5] / 1.57  # maps att rotation to -1:1
 
         list_out[9] = (list_coord[6] * 4) - 0.8  # maps x coordinate of ball to -1:1 (1 close to att, -1 close to goal)
         list_out[10] = (list_coord[7] * 2.92825768667643) + 1  # maps y of ball to -1:1 left:right
@@ -261,11 +250,11 @@ class FutEnv(Env):
 
     def transform_coordinates_out(self, list_coord, man_rot_def, man_rot_goalie):
         list_out = np.zeros(4)
-        list_out[0] = list_coord[0] * 0.0022222222222222222  # mapuje output z 0:99  na 0:0.22 golie slide
-        list_out[1] = list_coord[1] * 0.004141414141414141  # mapuje rozsah na 0:99 def slide
+        list_out[0] = list_coord[0] * 0.0022222222222222222  # maps model output to golie slide
+        list_out[1] = list_coord[1] * 0.004141414141414141  # maps model output to def slide
 
-        list_out[2] = man_rot_goalie  # mapuje rozsah na -1.57:1.57 golie rotation
-        list_out[3] = man_rot_def  # mapuje rozsah na -1.57:1.57 def rotation
+        list_out[2] = (list_coord[2] * 0.042105263157894) -0.4  # maps model output to -0.4:0.4 golie rotation
+        list_out[3] = (list_coord[3] * 0.042105263157894) -0.4  # maps model output to -0.4:0.4 def rotation
         return list_out
 
     def step(self, action):
@@ -289,13 +278,7 @@ class FutEnv(Env):
         reward = 0
         # Epsilon for overlap of players
         eps = 0.1
-        # Penalty for moving
-        # action_penalty = abs(self.last_action[0] - action[0]) + abs(self.last_action[1] - action[1])
-        #
-        # if self.eval_data[10] < 0.3:
-        #     reward -= action_penalty / 20
-        # else:
-        #     reward -= action_penalty
+
         # Reward if players are in front of ball
         if self.eval_data[0] + eps <= self.eval_data[10] <= self.eval_data[0] - eps:
             reward += 10
